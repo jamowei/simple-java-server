@@ -7,13 +7,16 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
 public class SimpleServer {
+
+    private static final String endpoint = "/hello";
+
     public static void main(String[] args) throws Exception {
         int port = 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/info/get", new HelloWorld());
+        server.createContext(endpoint, new HelloWorld());
         server.setExecutor(java.util.concurrent.Executors.newCachedThreadPool());
         server.start();
-        System.out.println("Server started at http://localhost:" + port + "/info/get");
+        System.out.println("Server started at http://localhost:" + port + endpoint);
     }
     static class HelloWorld implements HttpHandler {
         @Override

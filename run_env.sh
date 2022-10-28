@@ -6,6 +6,16 @@ read namespace
 echo Pod?
 read pod
 
+# Maven compile project
+$JAVA_HOME/bin/java -Dmaven.multiModuleProjectDirectory=$PWD \
+-Dmaven.home="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3" \
+-Dclassworlds.conf="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3/bin/m2.conf" \
+-Dmaven.ext.class.path="/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven-event-listener.jar" \
+-Dfile.encoding=UTF-8 \
+-classpath "/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3/boot/plexus-classworlds.license:/Applications/IntelliJ IDEA.app/Contents/plugins/maven/lib/maven3/boot/plexus-classworlds-2.6.0.jar" \
+org.codehaus.classworlds.Launcher \
+compile
+
 export DYLD_INSERT_LIBRARIES=$PWD/libmirrord_layer.dylib
 export LD_PRELOAD=$PWD/libmirrord_layer.so
 export MIRRORD_AGENT_RUST_LOG=INFO
@@ -23,16 +33,16 @@ export MIRRORD_TCP_OUTGOING=true
 export MIRRORD_UDP_OUTGOING=false
 
 # IntelliJ Run - works!
-#$JAVA_HOME/bin/java \
-# -javaagent:"/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50527:/Applications/IntelliJ IDEA.app/Contents/bin" \
-# -Dfile.encoding=UTF-8 \
-# -classpath $PWD/target/classes \
-# SimpleServer
+$JAVA_HOME/bin/java \
+ -javaagent:"/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50527:/Applications/IntelliJ IDEA.app/Contents/bin" \
+ -Dfile.encoding=UTF-8 \
+ -classpath $PWD/target/classes \
+ SimpleServer
 
 # IntelliJ Debug - not working...
-$JAVA_HOME/bin/java \
- -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:50547,suspend=y,server=n \
- -javaagent:"/Users/jamowei/Library/Caches/JetBrains/IntelliJIdea2022.2/captureAgent/debugger-agent.jar" \
- -Dfile.encoding=UTF-8 \
- -classpath $PWD/target/classes:"/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar" \
- SimpleServer
+#$JAVA_HOME/bin/java \
+# -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:50547,suspend=y,server=n \
+# -javaagent:"/Users/jamowei/Library/Caches/JetBrains/IntelliJIdea2022.2/captureAgent/debugger-agent.jar" \
+# -Dfile.encoding=UTF-8 \
+# -classpath $PWD/target/classes:"/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar" \
+# SimpleServer
